@@ -88,7 +88,7 @@ if (-not (Test-Path $GRADLE_WRAPPER_SHA256)) {
     Write-Host "Downloading SHA256 checksum from $Sha256DownloadUrl"
     # Invoke-WebRequest is the native PowerShell equivalent for curl --location --output.
     try {
-        Invoke-WebRequest -Uri $Sha256DownloadUrl -OutFile $GRADLE_WRAPPER_SHA256 -UseBasicParsing
+        Invoke-WebRequest -Uri $Sha256DownloadUrl -OutFile $GRADLE_WRAPPER_SHA256 -UseBasicParsing -ErrorAction Stop
     } catch {
         Write-Error "Failed to download SHA256 checksum: $($_.Exception.Message)"
         exit 1
@@ -110,7 +110,7 @@ if (-not (Test-Path $GRADLE_WRAPPER_JAR)) {
     Write-Host "Downloading wrapper JAR from $JarDownloadUrl"
 
     try {
-        Invoke-WebRequest -Uri $JarDownloadUrl -OutFile $GRADLE_WRAPPER_JAR -UseBasicParsing
+        Invoke-WebRequest -Uri $JarDownloadUrl -OutFile $GRADLE_WRAPPER_JAR -UseBasicParsing -ErrorAction Stop
     } catch {
         Write-Error "Failed to download wrapper JAR: $($_.Exception.Message)"
         exit 1
