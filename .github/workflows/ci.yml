@@ -42,5 +42,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      # Start Gradle via the cmd.exe
       - shell: cmd
         run: gradlew.bat tasks
+      # Run another time - start Gradle via ps
+      - run: git clean -xdf
+      - run: ./gradlew tasks
