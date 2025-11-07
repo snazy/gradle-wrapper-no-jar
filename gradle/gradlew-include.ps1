@@ -35,18 +35,15 @@ if (-not (Test-Path $GradlePropertiesPath)) {
 # Read the content and use a regex match to capture the version number.
 # Bash regex: 's/^.*gradle-\([0-9.]*\)-[a-z]*.zip$/\1/'
 # PowerShell equivalent: Match the distributionUrl line, then capture the version group.
-$FileContent = Get-Content -Path $GradlePropertiesPath | Select-String -Pattern "distributionUrl=" -CaseSensitive
-if ($FileContent -eq $null) {
-    Write-Error "Could not find 'distributionUrl' in $GradlePropertiesPath"
-    exit 1
-}
-
-$Match = [regex]::Match($FileContent.ToString(), 'gradle-([0-9.]+)-[a-z]*.zip$')
-if (-not $Match.Success) {
-    Write-Error "Could not extract Gradle version from distributionUrl."
-    exit 1
-}
-$GRADLE_DIST_VERSION = $Match.Groups[1].Value
+$GRADLE_DIST_VERSION = (
+Select-String -Path $GradlePropertiesPath -CaseSensitive `
+                  -Pattern 'distributionUrl=' |
+        ForEach-Object {
+            if ($_ -match 'gradle-([\d.]+)-[a-z]+\.zip') {
+                $Matches[1]
+            }
+        }
+)
 
 # Define file paths
 $GRADLE_WRAPPER_SHA256 = Join-Path -Path $env:APP_HOME -ChildPath "gradle\wrapper\gradle-wrapper-$GRADLE_DIST_VERSION.jar.sha256"
