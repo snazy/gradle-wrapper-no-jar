@@ -61,7 +61,32 @@ with a few simple steps.
    ```bash
    git rm -f gradle/wrapper/gradle-wrapper.jar
    ```
-7. Run `./gradlew` or `gradlew.bat` as you are used to. No changes to CI are needed.
+   If there are multiple Gradle usages in the source tree, consider running
+   ```bash
+   find . -path '**/gradle/wrapper/gradle-wrapper.jar' -exec git rm -f {} +
+   ```
+   instead.
+7. Run `./gradlew` or `gradlew.bat` as you are used to.
+8. CI changes:
+   * Remove any usage of the
+     [`gradle/actions/wrapper-validation`](https://github.com/gradle/actions/tree/main/wrapper-validation)
+     action or the already archived 
+     [`gradle/wrapper-validation-action`](https://github.com/gradle/wrapper-validation-action)
+     action. 
+   * Update all usages of the
+     [`gradle/actions/setup-gradle`](https://github.com/gradle/actions/tree/main/setup-gradle)
+     action to not validate the Gradle wrapper by setting `validate-wrappers: false`, for example:
+     ```yaml
+     - name: Gradle / Setup
+       uses: gradle/actions/setup-gradle@4d9f0ba0025fe599b4ebab900eb7f3a1d93ef4c2 # v5
+       with:
+         validate-wrappers: false
+     ```
+     Migrate from the already archived
+     [`gradle/gradle-build-action`](https://github.com/gradle/gradle-build-action)
+     to the above mentioned 
+     [`gradle/actions/setup-gradle`](https://github.com/gradle/actions/tree/main/setup-gradle),
+     if necessary.
 
 ## Project using this approach
 
