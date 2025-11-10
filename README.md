@@ -48,11 +48,9 @@ with a few simple steps.
    Add some empty lines around the added line for visibility.
 4. Add the following lines to `.gitignore`
    ```gitignore
-   # Ignore Gradle wrapper jar file
-   gradle/wrapper/gradle-wrapper.jar
-   gradle/wrapper/gradle-wrapper-*.sha256
-   # Avoid ignoring Gradle wrappper properties
-   !gradle-wrapper.properties
+   # Ignore Gradle wrapper jar file and checksum files
+   **/gradle/wrapper/gradle-wrapper.jar
+   **/gradle/wrapper/gradle-wrapper-*.sha256
    ```
 5. Add the changes to Git
    ```bash

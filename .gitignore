@@ -17,11 +17,11 @@
 # under the License.
 #
 
-# Ignore Gradle wrapper jar file
-/gradle/wrapper/gradle-wrapper.jar
-/gradle/wrapper/gradle-wrapper-*.sha256
+# Ignore Gradle wrapper jar file and checksum files
+**/gradle/wrapper/gradle-wrapper.jar
+**/gradle/wrapper/gradle-wrapper-*.sha256
 # Avoid ignoring Gradle wrappper properties
-!gradle-wrapper.properties
+!**/gradle/wrapper/gradle-wrapper.properties
 
 /.gradle
 
